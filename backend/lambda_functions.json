@@ -1,0 +1,18 @@
+[
+  {
+    "name": "add_numbers",
+    "body": "def add_numbers(request):\n    return request['a'] + request['b']"
+  },
+  {
+    "name": "is_palindrome",
+    "body": "def is_palindrome(request):\n    string = request['string']\n    string = string.lower()\n    return string == string[::-1]"
+  },
+  {
+    "name": "factorial",
+    "body": "def factorial(request):\n    n = request['n']\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial({'n':n-1})"
+  },
+  {
+    "name": "find_max",
+    "body": "def find_max(request):\n    return max(request['numbers'])"
+  }
+]
