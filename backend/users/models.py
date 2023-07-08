@@ -5,5 +5,4 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    # lst_of_functions = models.ForeignKey(Lambda, null=True, on_delete=models.CASCADE)
     pass

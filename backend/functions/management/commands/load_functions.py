@@ -1,4 +1,3 @@
-from typing import Any
 from django.core.management.base import BaseCommand
 from functions.models import Function
 from users.models import User

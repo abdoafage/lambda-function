@@ -8,5 +8,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         Function.objects.filter(owner=None).delete()
         self.stdout.write(
-            self.style.SUCCESS("functions have None owner are deleted successfully.")
+            self.style.SUCCESS(
+                "functions have None \
+                                owner are deleted successfully."
+            )
         )
