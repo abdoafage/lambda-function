@@ -40,6 +40,20 @@ def load_functions_to_database(django_db_setup, django_db_blocker):
     return func
 
 
+@pytest.fixture(scope="session")
+def delete_null_onwer_function(django_db_setup, django_db_blocker):
+    """
+    delete_null_onwer_function() used to load all functions
+    from lambda_functions.json to database.
+    """
+
+    def func():
+        with django_db_blocker.unblock():
+            call_command("delete_null_owner")
+
+    return func
+
+
 @pytest.fixture
 def create_user_obj(db):
     """
