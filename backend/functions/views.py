@@ -52,33 +52,6 @@ class GetFunction(RetrieveAPIView):
     lookup_field = "id"
 
 
-class RunFunction(APIView):
-    permission_classes = [IsOwnerOfFunction, IsAuthenticated]
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-    throttle_classes = [UserRateThrottle]
-
-    def get_object(self):
-        try:
-            function = Function.objects.get(id=self.kwargs["id"])
-            self.check_object_permissions(self.request, function)
-            return function
-
-        except Function.DoesNotExist:
-            raise NotFound("Object not found")
-
-    def post(self, request, id):
-        func = self.get_object()
-
-        func.increase_n_of_call()
-
-        code = func.body
-        params = request.data
-
-        ret = execute_python_code(code, func.name, params)
-
-        return Response(ret, status=status.HTTP_200_OK)
-
-
 class TestFunction(APIView):
     permission_classes = [IsOwnerOfFunction, IsAuthenticated]
 
@@ -94,12 +67,26 @@ class TestFunction(APIView):
     def post(self, request, id):
         func = self.get_object()
 
+        self.increase_n_of_call(func)
+
         code = func.body
         params = request.data
 
         ret = execute_python_code(code, func.name, params)
 
-        return Response(ret, status=status.HTTP_200_OK)
+        status_code = (
+            status.HTTP_200_OK if ret["status"] == True else status.HTTP_400_BAD_REQUEST
+        )
+
+        return Response(ret, status=status_code)
+
+    def increase_n_of_call(self, func):
+        pass
+
+
+class RunFunction(TestFunction):
+    def increase_n_of_call(self, func):
+        func.increase_n_of_call()
 
 
 class GetAllFunctions(ListAPIView):

@@ -11,7 +11,7 @@ def execute_python_code(code, nameOfFunction, params):
 
         # Execute the code within the given namespace
         exec(code, namespace)
-        print(namespace)
+        # print(namespace)
         # Get the output from the namespace
         func = namespace.get(f"{nameOfFunction}", "")
 
