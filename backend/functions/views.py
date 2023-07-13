@@ -38,6 +38,10 @@ class UpdateFunction(UpdateAPIView):
     serializer_class = UpdateFunctionSerializer
     lookup_field = "id"
 
+    def put(self, request, *args, **kwargs):
+        print("request.data ", request.data)
+        return super().put(request, *args, **kwargs)
+
 
 class DeleteFunction(DestroyAPIView):
     permission_classes = [IsOwnerOfFunction, IsAuthenticated]
