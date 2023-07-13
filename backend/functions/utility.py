@@ -1,4 +1,8 @@
 import time
+import logging
+
+
+db_logger = logging.getLogger("db")
 
 
 def execute_python_code(code, nameOfFunction, params):
@@ -29,4 +33,5 @@ def execute_python_code(code, nameOfFunction, params):
 
     except Exception as e:
         print(e)
+        db_logger.exception(e)
         return {"status": False, "message": str(e), "execution_time": 0}
