@@ -11,3 +11,14 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"  # ["username", "password", "email", "function_set"]
+
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+
+    def create(self, validated_data):
+        instance = User.objects.create_user(**validated_data)
+
+        return instance

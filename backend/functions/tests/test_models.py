@@ -1,6 +1,9 @@
+import pytest
 from functions.models import Function
 
 
+@pytest.mark.functions
+@pytest.mark.models
 def test_function_model(AdminUser, create_user_obj):
     simpleUser = create_user_obj(username="simpleUser", password="password")
 

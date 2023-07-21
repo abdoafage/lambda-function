@@ -3,6 +3,8 @@ from functions.models import Function
 from functions.serializers import FunctionSerializer
 
 
+@pytest.mark.functions
+@pytest.mark.serializers
 @pytest.mark.django_db
 def test_function_serializer(AdminUser):
     function = FunctionSerializer(

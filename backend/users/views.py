@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework import status
 
 from .serializers import UserSerializer
@@ -26,27 +27,25 @@ class RegisterUser(APIView):
             )
 
         # Create a new user
-        user = User.objects.create_user(
-            username=username, password=password, email=email
+        User.objects.create_user(username=username, password=password, email=email)
+
+        return Response(
+            {"message": "Registration successful"}, status=status.HTTP_201_CREATED
         )
-
-        user
-
-        return Response({"message": "Registration successful"})
 
 
 class LoginUser(APIView):
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
-        print(request.data)
-        print(username)
+
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({"token": token, "_": _})
+            # print(token, _)
+            return Response({"token": str(token), "_": _})
         else:
             # Handle invalid credentials
             return Response({"error": "Invalid credentials"}, status=400)
@@ -54,13 +53,17 @@ class LoginUser(APIView):
 
 class LogoutUser(APIView):
     permission_classes = [
-        IsAuthenticated
+        IsAuthenticated,
     ]  # Ensure only authenticated users can access this view
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def post(self, request):
-        print(request)
-        logout(request)
+        # print(request)
+        # authorization_header = request.META.get("HTTP_AUTHORIZATION")
+        # print(authorization_header)
+        print(request.user.auth_token)
         request.user.auth_token.delete()
+        logout(request)
         return Response({"message": "Successfully logged out"})
 
 
@@ -80,3 +83,6 @@ class GetUser(APIView):
         serializers = UserSerializer(user, many=False).data
 
         return Response(serializers)
+
+
+# {"username":"abdoYasser2020","password":"183461"}

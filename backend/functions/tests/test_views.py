@@ -3,6 +3,8 @@ from django.urls import reverse
 from functions.models import Function
 
 
+@pytest.mark.functions
+@pytest.mark.views
 @pytest.mark.django_db
 def test_GetAllFunctions(AdminUser, load_functions_to_database, api_client):
     client = api_client(AdminUser)
@@ -18,6 +20,8 @@ def test_GetAllFunctions(AdminUser, load_functions_to_database, api_client):
     assert len(res.json()) == 4
 
 
+@pytest.mark.functions
+@pytest.mark.views
 @pytest.mark.django_db
 def test_RunFunction(AdminUser, load_functions_to_database, api_client):
     client = api_client(AdminUser)
@@ -64,6 +68,8 @@ def test_RunFunction(AdminUser, load_functions_to_database, api_client):
     )
 
 
+@pytest.mark.functions
+@pytest.mark.views
 @pytest.mark.django_db
 def test_TestFunction(AdminUser, load_functions_to_database, api_client):
     client = api_client(AdminUser)
@@ -110,6 +116,8 @@ def test_TestFunction(AdminUser, load_functions_to_database, api_client):
     )
 
 
+@pytest.mark.functions
+@pytest.mark.views
 @pytest.mark.django_db
 def test_GetFunction(AdminUser, load_functions_to_database, api_client):
     client = api_client(AdminUser)
@@ -130,6 +138,8 @@ def test_GetFunction(AdminUser, load_functions_to_database, api_client):
     assert res["owner"] == AdminUser.id
 
 
+@pytest.mark.functions
+@pytest.mark.views
 @pytest.mark.django_db
 def test_Create_Update_Delete_Function(AdminUser, api_client):
     # Create

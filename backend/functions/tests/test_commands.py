@@ -7,6 +7,8 @@ def test_load(AdminUser, load_functions_to_database):
     assert Function.objects.count() == 4
 
 
+@pytest.mark.functions
+@pytest.mark.commands
 @pytest.mark.django_db
 def test_delete_null_owner(delete_null_onwer_function):
     function = Function.objects.create(
