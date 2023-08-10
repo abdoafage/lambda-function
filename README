@@ -1,1 +1,19 @@
+## Backend.
+
+### testing.
+
+```bash
+pytest -rP
+# or
+pytest
+```
+
+to test specific function have particular marks:
+
+```bash
+pytest -m "mark1 and mark2"
+```
+
+## TODO:
+
 [] add permession on each lambda function if public or private.

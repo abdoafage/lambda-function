@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
+from django.http import HttpResponseBadRequest
 
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
@@ -7,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
+
 
 from .serializers import UserSerializer
 
@@ -21,6 +24,7 @@ class RegisterUser(APIView):
         email = request.data.get("email")
 
         if User.objects.filter(username=username).exists():
+            print("found it")
             return Response(
                 {"error": "Username is already taken"},
                 status=status.HTTP_400_BAD_REQUEST,

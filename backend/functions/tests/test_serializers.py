@@ -12,6 +12,7 @@ def test_function_serializer(AdminUser):
             "name": "find_min",
             "body": "def find_min(nums):\n    return min(nums)",
             "numberOfCalls": 0,
+            "runtime": "Python",
         }
     )
     function.is_valid(raise_exception=True)

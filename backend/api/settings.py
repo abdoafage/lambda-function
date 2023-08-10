@@ -43,7 +43,12 @@ DEFAULT_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
-THIRD_PARTY_APPS = ["rest_framework", "rest_framework.authtoken", "django_db_logger"]
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "rest_framework.authtoken",
+    "django_db_logger",
+    "corsheaders",
+]
 
 LOCAL_APPS = ["functions", "users"]
 
@@ -53,6 +58,7 @@ INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -142,9 +148,10 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "10/day", "user": "10000/day"},
+    # "DEFAULT_THROTTLE_RATES": {"anon": "10/day", "user": "10000/day"},
 }
 
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
 LOGGING = {
     "version": 1,

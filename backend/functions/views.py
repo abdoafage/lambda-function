@@ -25,6 +25,13 @@ from .permissions import IsOwnerOfFunction
 class CreateFunction(CreateAPIView):
     queryset = Function.objects.all()
     serializer_class = FunctionSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+
+    # def post(self, request, *args, **kwargs):
+    #     return super().post(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         super().perform_create(serializer)
@@ -34,17 +41,19 @@ class CreateFunction(CreateAPIView):
 
 class UpdateFunction(UpdateAPIView):
     permission_classes = [IsOwnerOfFunction, IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
     queryset = Function.objects.all()
     serializer_class = UpdateFunctionSerializer
     lookup_field = "id"
 
-    def put(self, request, *args, **kwargs):
+    def patch(self, request, *args, **kwargs):
         print("request.data ", request.data)
-        return super().put(request, *args, **kwargs)
+        return super().patch(request, *args, **kwargs)
 
 
 class DeleteFunction(DestroyAPIView):
     permission_classes = [IsOwnerOfFunction, IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
     queryset = Function.objects.all()
     serializer_class = FunctionSerializer
     lookup_field = "id"
@@ -53,11 +62,14 @@ class DeleteFunction(DestroyAPIView):
 class GetFunction(RetrieveAPIView):
     queryset = Function.objects.all()
     serializer_class = FunctionSerializer
+    permission_classes = [IsOwnerOfFunction, IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
     lookup_field = "id"
 
 
 class TestFunction(APIView):
     permission_classes = [IsOwnerOfFunction, IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
 
     def get_object(self):
         try:
@@ -79,7 +91,7 @@ class TestFunction(APIView):
         ret = execute_python_code(code, func.name, params)
 
         status_code = (
-            status.HTTP_200_OK if ret["status"] == True else status.HTTP_400_BAD_REQUEST
+            status.HTTP_200_OK  # if ret["status"] == True else status.HTTP_400_BAD_REQUEST
         )
 
         return Response(ret, status=status_code)
@@ -96,3 +108,9 @@ class RunFunction(TestFunction):
 class GetAllFunctions(ListAPIView):
     queryset = Function.objects.all()
     serializer_class = FunctionSerializer
+    permission_classes = [IsOwnerOfFunction, IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+
+    def get_queryset(self):
+        queryset = Function.objects.filter(owner=self.request.user)
+        return queryset

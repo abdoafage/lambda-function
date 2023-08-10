@@ -150,10 +150,13 @@ def test_Create_Update_Delete_Function(AdminUser, api_client):
         "name": "find_min",
         "body": "def find_min(nums):\n    return min(nums)",
         "numberOfCalls": 0,
+        "runtime": "Python",
     }
     response = client.post(url, data, format="json")
 
     res = response.json()
+
+    print(res)
 
     assert res["name"] == data["name"]
     assert res["body"] == data["body"]
@@ -168,6 +171,7 @@ def test_Create_Update_Delete_Function(AdminUser, api_client):
         "name": "find_min",
         "body": "def find_min(numbers):\n    return min(numbers)",
         "numberOfCalls": 0,
+        "runtime": "Python",
     }
     response = client.put(url, data, format="json")
 

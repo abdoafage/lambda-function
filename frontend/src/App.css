@@ -1,0 +1,57 @@
+.App {
+  /* width: 100vw; */
+  /* height: 90vh; */
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+}
+.Editor_controller {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  margin-bottom: 5px;
+}
+.Editor_controller button {
+  width: 100px;
+  height: 30px;
+  padding: 5px;
+  margin: 5px;
+}
+.AceEditor {
+  /* margin: 10px; */
+  width: 100%;
+  padding: 10px;
+}
+.Editor_screens {
+  display: flex;
+  flex-direction: column;
+  /* width: 90vw; */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.name_of_function {
+  margin: 5px 0;
+  padding: 10px 0;
+}
+.name_of_function > input {
+  padding: 10px;
+  /* height: 50px; */
+}
+
+.CodeSection,
+.JsonSection,
+.OutputSection {
+  height: 100vh;
+  width: 80%;
+  min-width: 300px;
+}
+
+.screen_1,
+.screen_2,
+.screen_3 {
+  height: 95vh !important;
+  /* min-height: 400px !important; */
+  /* max-height: 600px !important; */
+  width: 100%;
+}
